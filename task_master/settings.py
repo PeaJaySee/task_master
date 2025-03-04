@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =  os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = [".heroku.app","127.0.0.1"]
 
 
 # Application definition
@@ -56,9 +56,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-# Heroku settings
-import django_heroku
-django_heroku.settings(locals())
+
 
 ROOT_URLCONF = 'task_master.urls'
 
