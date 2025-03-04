@@ -24,6 +24,28 @@
             </div>
         </div>
 
+        <!-- Add Task Form -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2>Add Task</h2>
+                <form method="post" class="row g-3">
+                    {% csrf_token %}
+                    <div class="col-md-4">
+                        {{ form.title.label_tag }} {{ form.title }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.due_date.label_tag}} {{ form.due_date}}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.category.label_tag }} {{ form.category }}
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="submit" class="btn btn-sm btn-primary">Add Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Columns for to-do and done go here -->
 
         <div class="row">
