@@ -13,7 +13,7 @@
     <!-- font-awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<!-- custom styles -->
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
@@ -25,6 +25,70 @@
         </div>
 
         <!-- Columns for to-do and done go here -->
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Tasks Due</h2>
+                <div class="row mb-2">
+                    <div class="col-3"><strong>Due Date</strong></div>
+                    <div class="col-3"><strong>Title</strong></div>
+                    <div class="col-3"><strong>Category</strong></div>
+                    <div class="col-3"><strong>Actions</strong></div>
+                </div>
+                <ul class="list-group">
+                    {% for task in tasks_due %}
+                    <li class="list-group-item">
+                       <div class="row">
+                        <div class="col-3">
+                            {{ task.due_date|date:"d/m/Y" }}
+                        </div>
+                        <div class="col-3">
+                            {{ task.title }}
+                        </div>
+                        <div class="col-3">
+                            {{ task.category.name }}
+                        </div>
+                        <div class="col-3 d-flex align-items-center">
+                            <form method="post" action="{% url 'complete_task' task.id %}" class="me-2">
+                                {% csrf_token %}
+                                <input type="checkbox" name="complete" onchange="this.form.submit()" class="action-icon">
+                            </form>
+                            <form method="post" action="{% url 'delete_task' task.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                            </form>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Completed Tasks</h2>
+                <div class="row mb-2">
+                    <div class="col-9"><strong>Title</strong></div>
+                    <div class="col-3 text-center"><strong>Actions</strong></div>
+                </div>
+                <ul class="list-group">
+                    {% for task in tasks_completed %}
+                        <li class="list-group-item">
+                            <div class="row">
+                            <div class="col-9">
+                                {{ task.title }} - Complete
+                            </div>
+                            <div class="col-3 d-flex align-items-center">
+                            <form method="post" action="{% url 'delete_task' task.id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm float-end ms-5"><i class="fa fa-trash"></i></button>
+                            </form>
+                            </div>
+                        </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
 
     </div>
 
